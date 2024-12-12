@@ -25,12 +25,14 @@
 
     <!-- JavaScript để thay đổi avatar -->
     <script type="text/javascript">
+        var Tawk_API = Tawk_API || {};  // Khởi tạo đối tượng nếu chưa có
         Tawk_API.onLoad = function() {
-            // Thay đổi Avatar của nhân viên
+            // Thay đổi Avatar của nhân viên khi widget Tawk.to đã tải xong
             Tawk_API.setAttributes({
                 'name': 'Thu Trang',  // Đặt tên của nhân viên hỗ trợ
                 'avatar': 'https://i.ibb.co/W6y4q0g/461048236-1070808604391711-8132402547166610401-n.jpg'  // Đường dẫn đến ảnh avatar mới
             });
+            console.log("Avatar đã được thay đổi!");
         };
     </script>
 
