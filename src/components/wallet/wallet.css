@@ -1,0 +1,473 @@
+/* ================================
+   Integrated Wallet Settings Row
+   ================================ */
+
+.wallet-settings-row {
+  background: linear-gradient(135deg, rgba(102, 126, 234, 0.1) 0%, rgba(118, 75, 162, 0.1) 100%) !important;
+  border-left: 4px solid #667eea !important;
+  border-radius: 12px !important;
+  margin: 8px 0 !important;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+  position: relative !important;
+  overflow: hidden !important;
+}
+
+.wallet-settings-row:hover {
+  transform: translateX(4px) !important;
+  background: linear-gradient(135deg, rgba(102, 126, 234, 0.15) 0%, rgba(118, 75, 162, 0.15) 100%) !important;
+  box-shadow: 0 4px 16px rgba(102, 126, 234, 0.2) !important;
+}
+
+.wallet-settings-row::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(45deg, transparent 30%, rgba(255,255,255,0.05) 50%, transparent 70%);
+  transform: translateX(-100%);
+  transition: transform 0.6s;
+  z-index: 1;
+}
+
+.wallet-settings-row:hover::before {
+  transform: translateX(100%);
+}
+
+/* ================================
+   Wallet SVG Icon Styling
+   ================================ */
+
+.wallet-icon-container {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  position: relative !important;
+  z-index: 2 !important;
+}
+
+.wallet-svg-icon {
+  width: 24px !important;
+  height: 24px !important;
+  color: #667eea !important;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+  filter: drop-shadow(0 2px 4px rgba(102, 126, 234, 0.2));
+}
+
+.wallet-icon-container:hover .wallet-svg-icon {
+  color: #764ba2 !important;
+  transform: scale(1.1) !important;
+  filter: drop-shadow(0 4px 8px rgba(118, 75, 162, 0.3));
+}
+
+.wallet-settings-row:hover .wallet-svg-icon {
+  color: #5a67d8 !important;
+}
+
+/* Alternative wallet icons */
+.wallet-icon-gradient {
+  fill: url(#walletGradient) !important;
+}
+
+/* ================================
+   Wallet Row Content
+   ================================ */
+
+.wallet-settings-row .row-title {
+  font-weight: 600 !important;
+  color: var(--primary-text-color) !important;
+  position: relative !important;
+  z-index: 2 !important;
+}
+
+.wallet-settings-row .row-subtitle {
+  color: var(--secondary-text-color) !important;
+  font-size: 13px !important;
+  opacity: 0.8 !important;
+  position: relative !important;
+  z-index: 2 !important;
+}
+
+.wallet-settings-row .row-title-right {
+  font-weight: 600 !important;
+  font-size: 14px !important;
+  color: #4CAF50 !important;
+  position: relative !important;
+  z-index: 2 !important;
+  transition: all 0.3s ease !important;
+}
+
+.wallet-settings-row .row-title-right.inactive {
+  color: #667eea !important;
+  font-size: 13px !important;
+}
+
+/* ================================
+   Update Animation
+   ================================ */
+
+.wallet-update-animation {
+  animation: walletUpdatePulse 0.6s ease-out !important;
+}
+
+@keyframes walletUpdatePulse {
+  0% { 
+    transform: scale(1); 
+    background: linear-gradient(135deg, rgba(102, 126, 234, 0.1) 0%, rgba(118, 75, 162, 0.1) 100%);
+  }
+  50% { 
+    transform: scale(1.02); 
+    background: linear-gradient(135deg, rgba(76, 175, 80, 0.15) 0%, rgba(102, 126, 234, 0.15) 100%);
+    border-left-color: #4CAF50;
+  }
+  100% { 
+    transform: scale(1); 
+    background: linear-gradient(135deg, rgba(102, 126, 234, 0.1) 0%, rgba(118, 75, 162, 0.1) 100%);
+  }
+}
+
+/* ================================
+   Alternative SVG Icons
+   ================================ */
+
+/* Minimalist Wallet Icon */
+.wallet-icon-minimal {
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+/* Credit Card Style Icon */
+.wallet-icon-card {
+  fill: currentColor;
+  opacity: 0.9;
+}
+
+/* Bank Vault Style Icon */
+.wallet-icon-vault {
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.5;
+}
+
+/* ================================
+   Dark Mode Support
+   ================================ */
+
+.night .wallet-settings-row {
+  background: linear-gradient(135deg, rgba(102, 126, 234, 0.08) 0%, rgba(118, 75, 162, 0.08) 100%) !important;
+  border-left-color: #5a67d8 !important;
+}
+
+.night .wallet-settings-row:hover {
+  background: linear-gradient(135deg, rgba(102, 126, 234, 0.12) 0%, rgba(118, 75, 162, 0.12) 100%) !important;
+  box-shadow: 0 4px 16px rgba(102, 126, 234, 0.15) !important;
+}
+
+.night .wallet-svg-icon {
+  color: #7c8aed !important;
+}
+
+.night .wallet-icon-container:hover .wallet-svg-icon {
+  color: #8b7cc8 !important;
+}
+
+.night .wallet-settings-row .row-title-right {
+  color: #66bb6a !important;
+}
+
+.night .wallet-settings-row .row-title-right.inactive {
+  color: #7c8aed !important;
+}
+
+/* ================================
+   Mobile Responsiveness
+   ================================ */
+
+@media (max-width: 768px) {
+  .wallet-settings-row {
+    margin: 6px 0 !important;
+    padding: 12px !important;
+  }
+  
+  .wallet-svg-icon {
+    width: 22px !important;
+    height: 22px !important;
+  }
+  
+  .wallet-settings-row .row-title-right {
+    font-size: 13px !important;
+  }
+  
+  .wallet-settings-row:hover {
+    transform: translateX(2px) !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .wallet-settings-row {
+    border-radius: 8px !important;
+    margin: 4px 0 !important;
+  }
+  
+  .wallet-svg-icon {
+    width: 20px !important;
+    height: 20px !important;
+  }
+  
+  .wallet-settings-row .row-subtitle {
+    font-size: 12px !important;
+  }
+  
+  .wallet-settings-row .row-title-right {
+    font-size: 12px !important;
+  }
+}
+
+/* ================================
+   Additional SVG Icon Variants
+   ================================ */
+
+/* Modern Wallet Icon with Cards */
+.wallet-icon-modern {
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+/* Digital Wallet Icon */
+.wallet-icon-digital {
+  fill: currentColor;
+}
+
+/* Money Bag Icon Alternative */
+.wallet-icon-money {
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+/* ================================
+   Status Indicators
+   ================================ */
+
+.wallet-settings-row .balance-indicator {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 12px;
+  padding: 2px 8px;
+  border-radius: 12px;
+  background: rgba(76, 175, 80, 0.1);
+  color: #4CAF50;
+  font-weight: 600;
+}
+
+.wallet-settings-row .balance-indicator.inactive {
+  background: rgba(102, 126, 234, 0.1);
+  color: #667eea;
+}
+
+.wallet-settings-row .balance-indicator::before {
+  content: '●';
+  font-size: 8px;
+  animation: walletStatusPulse 2s infinite;
+}
+
+@keyframes walletStatusPulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
+}
+
+/* ================================
+   Loading State
+   ================================ */
+
+.wallet-settings-row.loading {
+  opacity: 0.7;
+  pointer-events: none;
+}
+
+.wallet-settings-row.loading .wallet-svg-icon {
+  animation: walletIconSpin 1s linear infinite;
+}
+
+@keyframes walletIconSpin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+/* ================================
+   New Transaction Notification
+   ================================ */
+
+.wallet-settings-row.new-transaction {
+  animation: walletNewTransaction 2s ease-out;
+}
+
+@keyframes walletNewTransaction {
+  0% { 
+    border-left-color: #667eea; 
+    background: linear-gradient(135deg, rgba(102, 126, 234, 0.1) 0%, rgba(118, 75, 162, 0.1) 100%);
+  }
+  25% { 
+    border-left-color: #4CAF50; 
+    background: linear-gradient(135deg, rgba(76, 175, 80, 0.15) 0%, rgba(102, 126, 234, 0.15) 100%);
+  }
+  75% { 
+    border-left-color: #4CAF50; 
+    background: linear-gradient(135deg, rgba(76, 175, 80, 0.15) 0%, rgba(102, 126, 234, 0.15) 100%);
+  }
+  100% { 
+    border-left-color: #667eea; 
+    background: linear-gradient(135deg, rgba(102, 126, 234, 0.1) 0%, rgba(118, 75, 162, 0.1) 100%);
+  }
+}
+
+/* ================================
+   Accessibility
+   ================================ */
+
+.wallet-settings-row:focus-visible {
+  outline: 2px solid #667eea;
+  outline-offset: 2px;
+}
+
+.wallet-settings-row[aria-pressed="true"] {
+  background: linear-gradient(135deg, rgba(102, 126, 234, 0.2) 0%, rgba(118, 75, 162, 0.2) 100%) !important;
+}
+
+/* ================================
+   High Contrast Mode
+   ================================ */
+
+@media (prefers-contrast: high) {
+  .wallet-settings-row {
+    border-left-width: 6px !important;
+    border-left-color: #000 !important;
+  }
+  
+  .wallet-svg-icon {
+    color: #000 !important;
+    stroke-width: 3 !important;
+  }
+  
+  .night .wallet-settings-row {
+    border-left-color: #fff !important;
+  }
+  
+  .night .wallet-svg-icon {
+    color: #fff !important;
+  }
+}
+
+/* ================================
+   Reduced Motion Support
+   ================================ */
+
+@media (prefers-reduced-motion: reduce) {
+  .wallet-settings-row,
+  .wallet-svg-icon,
+  .wallet-settings-row::before {
+    transition: none !important;
+    animation: none !important;
+  }
+  
+  .wallet-settings-row:hover {
+    transform: none !important;
+  }
+  
+  .wallet-icon-container:hover .wallet-svg-icon {
+    transform: none !important;
+  }
+}
+
+/* ================================
+   Print Styles
+   ================================ */
+
+@media print {
+  .wallet-settings-row {
+    background: white !important;
+    border: 1px solid #ccc !important;
+    border-left: 4px solid #667eea !important;
+    box-shadow: none !important;
+  }
+  
+  .wallet-svg-icon {
+    color: #000 !important;
+  }
+  
+  .wallet-settings-row .row-title-right {
+    color: #000 !important;
+  }
+}
+
+/* ================================
+   Custom Properties for Easy Theming
+   ================================ */
+
+.wallet-settings-row {
+  --wallet-primary-color: #667eea;
+  --wallet-secondary-color: #764ba2;
+  --wallet-success-color: #4CAF50;
+  --wallet-background-opacity: 0.1;
+  --wallet-hover-opacity: 0.15;
+  --wallet-border-width: 4px;
+  --wallet-border-radius: 12px;
+  --wallet-transform-distance: 4px;
+}
+
+/* ================================
+   Theme Variants
+   ================================ */
+
+/* Business Theme */
+.wallet-settings-row.theme-business {
+  --wallet-primary-color: #2563eb;
+  --wallet-secondary-color: #1d4ed8;
+  --wallet-success-color: #059669;
+}
+
+/* Luxury Theme */
+.wallet-settings-row.theme-luxury {
+  --wallet-primary-color: #7c3aed;
+  --wallet-secondary-color: #5b21b6;
+  --wallet-success-color: #047857;
+  border-left: 4px solid linear-gradient(45deg, #ffd700, #ffed4e);
+}
+
+/* Minimal Theme */
+.wallet-settings-row.theme-minimal {
+  --wallet-background-opacity: 0.05;
+  --wallet-hover-opacity: 0.08;
+  --wallet-border-width: 2px;
+  --wallet-transform-distance: 2px;
+}
+
+/* ================================
+   Integration with Telegram Themes
+   ================================ */
+
+/* Day Theme */
+body:not(.night) .wallet-settings-row {
+  border-left-color: var(--wallet-primary-color);
+  background: linear-gradient(135deg, 
+    rgba(from var(--wallet-primary-color) r g b / var(--wallet-background-opacity)) 0%, 
+    rgba(from var(--wallet-secondary-color) r g b / var(--wallet-background-opacity)) 100%);
+}
+
+/* Night Theme */
+.night .wallet-settings-row {
+  border-left-color: color-mix(in srgb, var(--wallet-primary-color) 80%, white 20%);
+  background: linear-gradient(135deg, 
+    rgba(from var(--wallet-primary-color) r g b / calc(var(--wallet-background-opacity) * 0.8)) 0%, 
+    rgba(from var(--wallet-secondary-color) r g b / calc(var(--wallet-background-opacity) * 0.8)) 100%);
+}
