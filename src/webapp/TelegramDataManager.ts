@@ -1,132 +1,42 @@
-export class TelegramDataManager {
-    private telegramId: string;
-    private userData: any = null;
-    
-    constructor() {
-        this.telegramId = this.getTelegramId();
-        this.loadUserData();
-        
-        // Auto refresh every 30 seconds
-        setInterval(() => this.refreshData(), 30000);
+const TOKEN_KEY = 'telebook_jwt';
+
+/**
+ * Bootstrap Telegram WebApp authentication.
+ * Reads initData, requests backend JWT and hooks fetch with Authorization header.
+ */
+export async function bootstrapTelegramWebApp() {
+  const webApp = (window as any).Telegram?.WebApp;
+  const initDataRaw = webApp?.initData || '';
+
+  const res = await fetch('/telebook/api/tg-bootstrap.php', {
+    method: 'POST',
+    headers: {'Content-Type': 'application/json'},
+    body: JSON.stringify({initDataRaw})
+  });
+
+  const data = await res.json();
+  if(!data.ok) {
+    throw new Error(data.error || 'bootstrap_failed');
+  }
+
+  if(data.token) {
+    localStorage.setItem(TOKEN_KEY, data.token);
+  }
+
+  const originalFetch = window.fetch.bind(window);
+  window.fetch = (input: RequestInfo | URL, init: RequestInit = {}) => {
+    const headers = new Headers(init.headers || {});
+    const token = localStorage.getItem(TOKEN_KEY);
+    if(token) {
+      headers.set('Authorization', `Bearer ${token}`);
     }
-    
-    private getTelegramId(): string {
-        const webApp = (window as any).Telegram?.WebApp;
-        return webApp?.initDataUnsafe?.user?.id?.toString() || 'demo_user';
-    }
-    
-    async loadUserData() {
-        try {
-            const response = await fetch('/api/webapp-user-data.php', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/x-www-form-urlencoded',
-                },
-                body: new URLSearchParams({
-                    action: 'get_user_data',
-                    telegram_id: this.telegramId
-                })
-            });
-            
-            const data = await response.json();
-            
-            if (data.success) {
-                this.userData = data.ui_data;
-                this.updateUI();
-            } else {
-                console.error('Failed to load user data:', data.message);
-                this.showError(data.message);
-            }
-        } catch (error) {
-            console.error('Error loading user data:', error);
-            this.showError('Không thể tải dữ liệu');
-        }
-    }
-    
-    private updateUI() {
-        if (!this.userData) return;
-        
-        // Update balance
-        const balanceElement = document.querySelector('.balance-amount');
-        if (balanceElement) {
-            balanceElement.textContent = this.userData.formatted_balance;
-        }
-        
-        // Update user info
-        const userNameElement = document.querySelector('.user-name');
-        if (userNameElement) {
-            userNameElement.textContent = this.userData.user_name;
-        }
-        
-        const vipElement = document.querySelector('.vip-level');
-        if (vipElement) {
-            vipElement.textContent = this.userData.vip_level;
-        }
-        
-        const creditElement = document.querySelector('.credit-score');
-        if (creditElement) {
-            creditElement.textContent = `Điểm tín nhiệm: ${this.userData.credit_score}`;
-        }
-        
-        const walletAddressElement = document.querySelector('.wallet-address');
-        if (walletAddressElement) {
-            walletAddressElement.textContent = this.userData.wallet_address;
-        }
-        
-        // Update member since
-        const memberSinceElement = document.querySelector('.member-since');
-        if (memberSinceElement) {
-            memberSinceElement.textContent = `Thành viên từ ${this.userData.member_since}`;
-        }
-        
-        // Update notification badge
-        const notificationBadge = document.querySelector('.notification-badge');
-        if (notificationBadge && this.userData.notification_count > 0) {
-            notificationBadge.textContent = this.userData.notification_count;
-            notificationBadge.style.display = 'block';
-        }
-        
-        // Update service counters
-        this.updateServiceCounters();
-    }
-    
-    private updateServiceCounters() {
-        // Update transaction history counter
-        const transactionCounter = document.querySelector('.transaction-counter');
-        if (transactionCounter) {
-            transactionCounter.textContent = `${this.userData.transaction_count} lần gần nhất`;
-        }
-        
-        // Update service history counter  
-        const serviceCounter = document.querySelector('.service-counter');
-        if (serviceCounter) {
-            serviceCounter.textContent = `Theo dõi sử dụng`;
-        }
-    }
-    
-    async refreshData() {
-        await this.loadUserData();
-        console.log('Data refreshed at:', new Date().toLocaleTimeString());
-    }
-    
-    private showError(message: string) {
-        // Show error notification
-        const errorDiv = document.createElement('div');
-        errorDiv.className = 'error-notification';
-        errorDiv.textContent = `Lỗi: ${message}`;
-        document.body.appendChild(errorDiv);
-        
-        setTimeout(() => {
-            errorDiv.remove();
-        }, 3000);
-    }
-    
-    getUserData() {
-        return this.userData;
-    }
+    return originalFetch(input, {...init, headers});
+  };
+
+  return data;
 }
 
-// Initialize when page loads
-document.addEventListener('DOMContentLoaded', () => {
-    window.telegramDataManager = new TelegramDataManager();
-});
+export function getToken(): string | null {
+  return localStorage.getItem(TOKEN_KEY);
+}
+

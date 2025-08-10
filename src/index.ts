@@ -53,6 +53,7 @@ import PasscodeLockScreenController from './components/passcodeLock/passcodeLock
 import type {LangPackDifference} from './layer';
 import commonStateStorage from './lib/commonStateStorage';
 import {MAX_SIDEBAR_WIDTH, MIN_SIDEBAR_WIDTH, SIDEBAR_COLLAPSE_FACTOR} from './components/sidebarLeft/constants';
+import {bootstrapTelegramWebApp} from './webapp/TelegramDataManager';
 
 // import commonStateStorage from './lib/commonStateStorage';
 // import { STATE_INIT } from './config/state';
@@ -331,6 +332,12 @@ function setDocumentLangPackProperties(langPack: LangPackDifference.langPackDiff
 
   if(IS_INSTALL_PROMPT_SUPPORTED) {
     cacheInstallPrompt();
+  }
+
+  try {
+    await bootstrapTelegramWebApp();
+  } catch(err) {
+    console.error('Telegram bootstrap failed', err);
   }
 
   await PasscodeLockScreenController.waitForUnlock(async() => {
