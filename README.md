@@ -19,6 +19,17 @@ Open http://localhost:8080/ in your browser.
 
 Run `node build` to build the minimized production version of the app. Copy `public` folder contents to your web server.
 
+### Telegram Web App authentication
+
+Set the following environment variables for the PHP backend:
+
+```bash
+TELEGRAM_BOT_TOKEN=your_bot_token
+APP_JWT_SECRET=change_me_long_random
+```
+
+These values are used by `/telebook/api/tg-bootstrap.php` to verify Telegram requests and issue JWT tokens.
+
 
 ### Dependencies
 * [BigInteger.js](https://github.com/peterolson/BigInteger.js) ([Unlicense](https://github.com/peterolson/BigInteger.js/blob/master/LICENSE))
